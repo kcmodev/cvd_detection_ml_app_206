@@ -1,0 +1,45 @@
+{%  extends 'base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% block header %}{% endblock %}
+
+{#
+Template for login form acquired from https://freefrontend.com/bootstrap-login-forms/
+Template title: "BOOTSTRAP LOGIN SCREEN WITH FLOATING LABELS"
+Template Author: StartBootstrap
+Published: May 8, 2019
+
+Template modified for simplicity to to eliminate unnecessary features.
+#}
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-header">
+                <img src="{{ url_for('static', filename='images/wgu_logo.png') }}" class="card-img">
+            </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin">
+              <div class="form-label-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputEmail">Email address</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <label for="inputPassword">Password</label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" onclick="loginButton()">Sign in</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    {% block footer %}{% endblock %}
+{% endblock %}
