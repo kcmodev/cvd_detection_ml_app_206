@@ -18,16 +18,16 @@ def index():
 #     return render_template('about.html', name=user['name'], title=about_title)
 
 
-@app.route('/dashboard')
+@app.route('/data')
 def dashboard():
-    dashboard_title = 'Dashboard'
-    return render_template('dashboard.html', name=user['name'], title=dashboard_title)
+    dashboard_title = 'Data'
+    return render_template('data.html', name=user['name'], title=dashboard_title)
 
     # if request.method == 'POST':
     #     # form_data = request.form
-    #     return render_template('dashboard.html', name=user['name'], title=dashboard_title)
+    #     return render_template('data.html', name=user['name'], title=dashboard_title)
     # else:
-    #     return render_template('dashboard.html', name=user['name'], title=dashboard_title)
+    #     return render_template('data.html', name=user['name'], title=dashboard_title)
 
 
 if __name__ == '__main__':

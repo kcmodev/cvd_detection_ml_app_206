@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import pickle
-import time
 from datetime import date
 
 # Classification ML libraries
@@ -13,15 +12,15 @@ from sklearn.metrics import accuracy_score
 
 def evaluate_predictions(y_actual, y_predicted):
 
-    accuracy = accuracy_score(y_actual, y_predicted) * 100
+    accuracy = accuracy_score(y_actual, y_predicted) * 100  # Scores accuracy of model's prediction
     print(f'Accuracy: {accuracy:.2f}%')
 
     return accuracy
 
 
 def calculate_age(birthdate):
-    today = date.today().toordinal()
-    user_age_in_days = today - birthdate.toordinal()
+    today = date.today().toordinal()  # Converts today's date into the total number of days since epoch
+    user_age_in_days = today - birthdate.toordinal()  # Converts birthday to days since epoch and subtracts from today
 
     return user_age_in_days
 

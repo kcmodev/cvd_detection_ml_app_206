@@ -1,3 +1,3 @@
 function loginButton() {
-    location.href = '/dashboard'
+    location.href = '/data'
 }
