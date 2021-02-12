@@ -19,7 +19,7 @@ def index():
 
 
 @app.route('/data')
-def dashboard():
+def data_page():
     dashboard_title = 'Data'
     return render_template('data.html', name=user['name'], title=dashboard_title)
 
