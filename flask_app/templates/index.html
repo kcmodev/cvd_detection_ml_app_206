@@ -25,15 +25,15 @@ Template modified for simplicity to to eliminate unnecessary features.
             <h5 class="card-title text-center">Sign In</h5>
             <form class="form-signin">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" {# required #} autofocus>
                 <label for="inputEmail">Email address</label>
               </div>
 
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" {# required #}>
                 <label for="inputPassword">Password</label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" onclick="loginButton()">Sign in</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" {# onclick="loginButton()" #} formaction="/data">Sign in</button>
             </form>
           </div>
         </div>
