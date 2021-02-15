@@ -1,8 +1,12 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table
+
 import plotly.express as px
 import pandas as pd
+
+from model import convert_age_in_days_to_years
 
 
 def init_dashboard(server):
@@ -11,67 +15,85 @@ def init_dashboard(server):
         server=server,
         routes_pathname_prefix='/dashapp/',
         external_stylesheets=[
-            '/static/dist/css/styles.css',
+            '/static/css/data.css'
         ]
     )
-    # assume you have a "long-form" data frame
-    # see https://plotly.com/python/px-arguments/ for more options
-    # df = pd.DataFrame({
-    #     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
-    #     "Amount": [4, 1, 2, 2, 4, 5],
-    #     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
-    # })
 
     # Columns: Age, Height, Weight, Gender, Systolic BP, Diastolic BP,
     #           Cholesterol, Glucose, Smoking, Alcohol Intake, Physical Activity
+    df = pd.read_csv("flask_app/static/data/readable_cvd_data.csv")
+    cholesterol = df['Cholesterol']
+    age = df['Age (years)']
+    cvd_status = df['CVD Status']
 
-    # columns = [{'age': 'Column 1'},
-    #            {'gender': 'Column 2'},
-    #            {'height': 'column 3'},
-    #            {'weight': 'column 4'},
-    #            {'ap_hi': 'column 5'},
-    #            {'ap_lo': 'column 6'},
-    #            {'cholesterol': 'column 7'},
-    #            {'gluc': 'column 8'},
-    #            {'smoke': 'column 9'},
-    #            {'alco': 'column 10'},
-    #            {'active': 'column 11'},
-    #            {'cardio': 'column 12'}]
-
-    columns = ['age', 'gender', 'height', 'weight', 'ap_hi', 'ap_lo',
-               'cholesterol', 'gluc', 'smoke', 'alco', 'active', 'cardio']
-
-    df = pd.read_csv("flask_app/static/data/sanitized_cvd_data.csv")
-    cholest = df['cholesterol']
-    age = df['age']
-
-    # fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
-    # fig2 = px.scatter(df, x='Fruit', y='Amount')
-
-    fig = px.density_heatmap(df, x=age, y=cholest)
+    fig = px.density_heatmap(df, x=age, y=cvd_status)
+    fig2 = px.box(df, x=age, y=cholesterol)
+    fig3 = px.line(df, x=age, y=cholesterol)
 
     # Create Dash Layout
     # dash_app.layout = html.Div(id='dash-container')
-    dash_app.layout = html.Div(children=[
-        html.H1(children='Hello Dasher'),
+    dash_app.layout = html.Div(id='dash-container', children=[
+        html.H1(children='List of data element cards'),
 
-        html.Div(children='''
-            Dash: A web application framework for Python.
+        html.H1(children='''
+            Heat map
+            Cholesterol correlated to age:
         '''),
 
         dcc.Graph(
-            id='example-graph',
-            figure=fig
+            id='graph',
+            figure=fig,
+            className='graphBox'
+        ),
+
+        html.H1(children='''
+                Next graph.
+            '''),
+
+        dcc.Graph(
+            id='example-graph-2',
+            figure=fig2,
+            className='graphBox'
+        ),
+
+        html.H1(children='''
+                    Next graph.
+                '''),
+
+        dcc.Graph(
+            id='example-graph-3',
+            figure=fig3,
+            className='graphBox'
+        ),
+
+        html.H1(children='''
+                List of records
+            '''),
+
+        dash_table.DataTable(
+            id='table',
+            columns=[
+                {"name": i, "id": i} for i in df.columns
+            ],
+            data=df[:20].to_dict('records'),
+            style_cell_conditional=[
+                {
+                    'if': {'row_index': 'odd'},
+                    'backgroundColor': 'rgb(248, 248, 248)'
+                }
+            ],
+            style_header={
+                'backgroundColor': 'rgb(230, 230, 230)',
+                'fontWeight': 'bold',
+                'text-align': 'center'
+            },
+
+            css=[{
+                'selector': '.dash-spreadsheet-container',
+                'rule': 'border: 1px solid black; border-radius: 15px; overflow: hidden;'
+            }]
         )
 
-        # html.Div(children='''
-        #     Dash: Another web application framework for Python.
-        # '''),
-        #
-        # dcc.Graph(
-        #     id='example-graph-2',
-        #     figure=fig2
-        # )
     ])
 
     return dash_app.server

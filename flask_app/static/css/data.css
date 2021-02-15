@@ -13,3 +13,9 @@ img {
     height: 170px;
     width: 140px
 }
+
+.graphBox {
+    border: 1px solid black;
+    border-radius: 15px;
+    overflow: hidden;
+}

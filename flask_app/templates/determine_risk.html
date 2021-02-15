@@ -6,11 +6,132 @@
 {% block body %}
 
     {% block header %}{% endblock %}
-    <h3> DETERMINING RISK PAGE </h3>
-    <a href="/dashapp/" class="dash-link">
-        <span>Embdedded Plotly Dash</span>
-        <i class="fas fa-arrow-right"></i>
-    </a>
+
+    {#
+Template for login form acquired from https://freefrontend.com/bootstrap-login-forms/
+Template title: "BOOTSTRAP LOGIN SCREEN WITH FLOATING LABELS"
+Template Author: StartBootstrap
+Published: May 8, 2019
+
+Template modified for simplicity to to eliminate unnecessary features.
+#}
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-header">
+                <img src="{{ url_for('static', filename='images/wgu_logo.png') }}" class="card-img">
+            </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Enter your info</h5>
+              <form>
+                  <div class="form-group">
+                      {# get user age #}
+                      <div class="form-group">
+                          <div class="row">
+                              <div class="col">
+                                  <label for="ageInput">Age</label>
+                                  <input id="ageInput" class="form-control" placeholder="in years">
+                              </div>
+                              <div class="col">
+                                  <label for="heightInput">Height</label>
+                                  <input id="heightInput" class="form-control" placeholder="in cm">
+                              </div>
+                              <div class="col">
+                                  <label for="weightInput">Weight</label>
+                                  <input id="weightInput" class="form-control" placeholder="in kg">
+                              </div>
+                          </div>
+                      </div>
+
+                      {# get user gender #}
+                      <label for="radioButtonGroup">Gender</label>
+                      <div class="form-group" id="radioButtonGroup">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                              <label class="form-check-label" for="inlineRadio1">Female</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                              <label class="form-check-label" for="inlineRadio2">Male</label>
+                          </div>
+                      </div>
+
+                      {# get user blood pressure #}
+                      <label for="bloodPressure">Blood Pressure</label>
+                      <div class="form-group" id="bloodPressure">
+
+                      {# systolic #}
+                          <div class="row">
+                            <div class="col">
+                              <input type="text" class="form-control" placeholder="Systolic">
+                            </div>
+
+                      {# diastolic #}
+                            <div class="col">
+                              <input type="text" class="form-control" placeholder="Diastolic">
+                            </div>
+                          </div>
+                      </div>
+
+                      {# get user blood glucose level #}
+                      <div class="form-group">
+                          <label for="dropdownSelect">Blood Glucose Level</label>
+                          <select id="dropdownSelect" class="form-control">
+                              <option>Normal</option>
+                              <option>Above Normal</option>
+                              <option>Well above normal</option>
+                          </select>
+                      </div>
+
+                      {#  get user cholesterol level #}
+                      <div class="form-group">
+                          <label for="dropdownSelect">Cholesterol</label>
+                          <select id="dropdownSelect" class="form-control">
+                              <option>Normal</option>
+                              <option>Above Normal</option>
+                              <option>Well above normal</option>
+                          </select>
+                      </div>
+
+                      {# get user alcohol use #}
+                      <div class="form-group">
+                          <label for="radioButtonGroup">Alcohol use</label>
+                          <div class="form-group" id="radioButtonGroup">
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                  <label class="form-check-label" for="inlineRadio1">Yes</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                  <label class="form-check-label" for="inlineRadio2">No</label>
+                              </div>
+                          </div>
+                      </div>
+
+                      {# get user physical acitvity #}
+                      <div class="form-group">
+                          <label for="radioButtonGroup">Are you physically active?</label>
+                          <div class="form-group" id="radioButtonGroup">
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                  <label class="form-check-label" for="inlineRadio1">Yes</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                  <label class="form-check-label" for="inlineRadio2">No</label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" {# onclick="loginButton()" #} formaction="/show_calculated_risk">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     {% block footer %}{% endblock %}
 
 {% endblock %}

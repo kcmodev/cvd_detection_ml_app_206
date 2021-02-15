@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 import pickle
-from datetime import date
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
 
 # Classification ML libraries
 from sklearn.model_selection import train_test_split
@@ -18,11 +19,18 @@ def evaluate_predictions(y_actual, y_predicted):
     return accuracy
 
 
-def calculate_age(birthdate):
+def convert_birthdate_to_age_in_days(birthdate):
     today = date.today().toordinal()  # Converts today's date into the total number of days since epoch
     user_age_in_days = today - birthdate.toordinal()  # Converts birthday to days since epoch and subtracts from today
 
     return user_age_in_days
+
+
+def convert_age_in_days_to_years(birthdate_in_days):
+    delta = relativedelta(date.today(), date.fromordinal(birthdate_in_days))
+    years = datetime.today().year - (delta.years + 1)
+
+    return years
 
 
 def read_data_file():

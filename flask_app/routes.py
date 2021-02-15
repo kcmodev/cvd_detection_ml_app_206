@@ -17,10 +17,15 @@ def index():
     return render_template('index.html', name=user['name'], title='Login')
 
 
-@app.route('/data')
+@app.route('/determine_risk')
 def data_page():
     # return render_template('data.html', name=user['name'], title='Data')
     return render_template('determine_risk.html')
+
+
+@app.route('/show_calculated_risk')
+def calculated_risk_page():
+    pass
 
 
 # @app.route('/dashapp/')
