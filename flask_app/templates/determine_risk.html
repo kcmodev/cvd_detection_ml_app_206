@@ -7,7 +7,7 @@
 
     {% block header %}{% endblock %}
 
-    {#
+{#
 Template for login form acquired from https://freefrontend.com/bootstrap-login-forms/
 Template title: "BOOTSTRAP LOGIN SCREEN WITH FLOATING LABELS"
 Template Author: StartBootstrap
@@ -24,36 +24,36 @@ Template modified for simplicity to to eliminate unnecessary features.
             </div>
           <div class="card-body">
             <h5 class="card-title text-center">Enter your info</h5>
-              <form>
+              <form method="POST">
                   <div class="form-group">
                       {# get user age #}
                       <div class="form-group">
                           <div class="row">
                               <div class="col">
-                                  <label for="ageInput">Age</label>
-                                  <input id="ageInput" class="form-control" placeholder="in years">
+                                  <label for="ageInput">Birthdate</label>
+                                  <input name="birthdate" id="ageInput" class="form-control" placeholder="yyyymmdd">
                               </div>
                               <div class="col">
                                   <label for="heightInput">Height</label>
-                                  <input id="heightInput" class="form-control" placeholder="in cm">
+                                  <input name="height" id="heightInput" class="form-control" placeholder="in cm">
                               </div>
                               <div class="col">
                                   <label for="weightInput">Weight</label>
-                                  <input id="weightInput" class="form-control" placeholder="in kg">
+                                  <input name="weight" id="weightInput" class="form-control" placeholder="in kg">
                               </div>
                           </div>
                       </div>
 
                       {# get user gender #}
-                      <label for="radioButtonGroup">Gender</label>
-                      <div class="form-group" id="radioButtonGroup">
+                      <label for="genderRadioButtonGroup">Gender</label>
+                      <div class="form-group">
                           <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                              <label class="form-check-label" for="inlineRadio1">Female</label>
+                              <input class="form-check-input" type="radio" name="gender" value="Female">
+                              <label class="form-check-label" for="femaleInlineRadio">Female</label>
                           </div>
                           <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                              <label class="form-check-label" for="inlineRadio2">Male</label>
+                              <input class="form-check-input" type="radio" name="gender" value="Male">
+                              <label class="form-check-label" for="maleInlineRadio">Male</label>
                           </div>
                       </div>
 
@@ -64,12 +64,12 @@ Template modified for simplicity to to eliminate unnecessary features.
                       {# systolic #}
                           <div class="row">
                             <div class="col">
-                              <input type="text" class="form-control" placeholder="Systolic">
+                              <input id="systolic_bp" type="text" class="form-control" placeholder="Systolic">
                             </div>
 
                       {# diastolic #}
                             <div class="col">
-                              <input type="text" class="form-control" placeholder="Diastolic">
+                              <input id="diastolic_bp" type="text" class="form-control" placeholder="Diastolic">
                             </div>
                           </div>
                       </div>
@@ -77,33 +77,33 @@ Template modified for simplicity to to eliminate unnecessary features.
                       {# get user blood glucose level #}
                       <div class="form-group">
                           <label for="dropdownSelect">Blood Glucose Level</label>
-                          <select id="dropdownSelect" class="form-control">
-                              <option>Normal</option>
-                              <option>Above Normal</option>
-                              <option>Well above normal</option>
+                          <select name="glucose_level" id="glucoseDropdownSelect" class="form-control">
+                              <option value="1">Normal (Less than 140 mg/dL)</option>
+                              <option value="2">Above Normal (Between 140 and 200 mg/dL)</option>
+                              <option value="3">Well above normal (Greater than 200 mg/dL)</option>
                           </select>
                       </div>
 
                       {#  get user cholesterol level #}
                       <div class="form-group">
                           <label for="dropdownSelect">Cholesterol</label>
-                          <select id="dropdownSelect" class="form-control">
-                              <option>Normal</option>
-                              <option>Above Normal</option>
-                              <option>Well above normal</option>
+                          <select name="cholesterol_level" id="cholesterolDropdownSelect" class="form-control">
+                              <option value="1">Normal (Less than 200)</option>
+                              <option value="2">Above Normal (Between 200 and 240)</option>
+                              <option value="3">Well above normal (Greater than 240)</option>
                           </select>
                       </div>
 
                       {# get user alcohol use #}
                       <div class="form-group">
-                          <label for="radioButtonGroup">Alcohol use</label>
-                          <div class="form-group" id="radioButtonGroup">
+                          <label for="alcoholRadioButtonGroup">Alcohol use</label>
+                          <div name="alcohol_use" class="form-group" id="alcoholRadioButtonGroup">
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                  <input class="form-check-input" type="radio" name="alcoholRadioButtonGroup" id="alchUseYesRadio" value="option1">
                                   <label class="form-check-label" for="inlineRadio1">Yes</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                  <input class="form-check-input" type="radio" name="alcoholRadioButtonGroup" id="alchUseNoRadio" value="option2">
                                   <label class="form-check-label" for="inlineRadio2">No</label>
                               </div>
                           </div>
@@ -111,21 +111,21 @@ Template modified for simplicity to to eliminate unnecessary features.
 
                       {# get user physical acitvity #}
                       <div class="form-group">
-                          <label for="radioButtonGroup">Are you physically active?</label>
-                          <div class="form-group" id="radioButtonGroup">
+                          <label for="activityRadioButtonGroup">Are you physically active?</label>
+                          <div name="physically_active" class="form-group" id="activityRadioButtonGroup">
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                  <input class="form-check-input" type="radio" name="activityRadioButtonGroup" id="activeYesRadio" value="option1">
                                   <label class="form-check-label" for="inlineRadio1">Yes</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                  <input class="form-check-input" type="radio" name="activityRadioButtonGroup" id="activeNoRadio" value="option2">
                                   <label class="form-check-label" for="inlineRadio2">No</label>
                               </div>
                           </div>
                       </div>
                   </div>
               </form>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" {# onclick="loginButton()" #} formaction="/show_calculated_risk">Submit</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="submitDataButton">Submit</button>
           </div>
         </div>
       </div>

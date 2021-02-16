@@ -1,0 +1,13 @@
+{%  extends 'base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/data.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {% block header %} {% endblock %}
+
+    <h1>Calculated risk page</h1>
+
+    {% block footer %} {% endblock %}
+{% endblock %}

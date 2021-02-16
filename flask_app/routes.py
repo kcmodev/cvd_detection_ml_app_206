@@ -2,11 +2,7 @@
 from flask import render_template
 from flask import current_app as app
 
-# from flask import Flask, render_template, request
-
-# app = Flask(__name__, template_folder='flask_app/templates', static_folder='flask_app/static')
-# app = Flask(__name__)
-# app.config.from_object('config.Config')
+from model import run_model
 
 user = {'name': 'Steve'}
 
@@ -25,7 +21,8 @@ def data_page():
 
 @app.route('/show_calculated_risk')
 def calculated_risk_page():
-    pass
+
+    return render_template('show_calculated_risk.html')
 
 
 # @app.route('/dashapp/')
