@@ -7,14 +7,14 @@
 
     {% block header %}{% endblock %}
 
-{#
-Template for login form acquired from https://freefrontend.com/bootstrap-login-forms/
-Template title: "BOOTSTRAP LOGIN SCREEN WITH FLOATING LABELS"
-Template Author: StartBootstrap
-Published: May 8, 2019
 
-Template modified for simplicity to to eliminate unnecessary features.
-#}
+{#Template for login form acquired from https://freefrontend.com/bootstrap-login-forms/#}
+{#Template title: "BOOTSTRAP LOGIN SCREEN WITH FLOATING LABELS"#}
+{#Template Author: StartBootstrap#}
+{#Published: May 8, 2019#}
+
+{#Template modified for simplicity to to eliminate unnecessary features.#}
+
     <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -24,12 +24,14 @@ Template modified for simplicity to to eliminate unnecessary features.
             </div>
           <div class="card-body">
             <h5 class="card-title text-center">Enter your info</h5>
-              <form method="POST">
+              <form>
                   <div class="form-group">
                       {# get user age #}
                       <div class="form-group">
                           <div class="row">
                               <div class="col">
+{#                                  {{ form.birthdate.label }}#}
+{#                                  {{ form.birthdate }}#}
                                   <label for="ageInput">Birthdate</label>
                                   <input name="birthdate" id="ageInput" class="form-control" placeholder="yyyymmdd">
                               </div>
@@ -48,11 +50,11 @@ Template modified for simplicity to to eliminate unnecessary features.
                       <label for="genderRadioButtonGroup">Gender</label>
                       <div class="form-group">
                           <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="gender" value="Female">
+                              <input name="gender" class="form-check-input" type="radio" id="maleSelected" value="Female">
                               <label class="form-check-label" for="femaleInlineRadio">Female</label>
                           </div>
                           <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="gender" value="Male">
+                              <input name="gender" class="form-check-input" type="radio" id="femaleSelected" value="Male">
                               <label class="form-check-label" for="maleInlineRadio">Male</label>
                           </div>
                       </div>
@@ -60,13 +62,11 @@ Template modified for simplicity to to eliminate unnecessary features.
                       {# get user blood pressure #}
                       <label for="bloodPressure">Blood Pressure</label>
                       <div class="form-group" id="bloodPressure">
-
                       {# systolic #}
                           <div class="row">
                             <div class="col">
                               <input id="systolic_bp" type="text" class="form-control" placeholder="Systolic">
                             </div>
-
                       {# diastolic #}
                             <div class="col">
                               <input id="diastolic_bp" type="text" class="form-control" placeholder="Diastolic">
@@ -96,15 +96,30 @@ Template modified for simplicity to to eliminate unnecessary features.
 
                       {# get user alcohol use #}
                       <div class="form-group">
-                          <label for="alcoholRadioButtonGroup">Alcohol use</label>
-                          <div name="alcohol_use" class="form-group" id="alcoholRadioButtonGroup">
+                          <label for="alcoholUseRadioButtonGroup">Alcohol use?</label>
+                          <div class="form-group">
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="alcoholRadioButtonGroup" id="alchUseYesRadio" value="option1">
-                                  <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                  <input name="alcohol" class="form-check-input" type="radio" id="yesAlcoholUse" value="1">
+                                  <label class="form-check-label" for="alchYesInlineRadio">Yes</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="alcoholRadioButtonGroup" id="alchUseNoRadio" value="option2">
-                                  <label class="form-check-label" for="inlineRadio2">No</label>
+                                  <input name="alcohol" class="form-check-input" type="radio" id="noAlcoholUse" value="0">
+                                  <label class="form-check-label" for="alchNoInlineRadio">No</label>
+                              </div>
+                          </div>
+                      </div>
+
+                      {# get user current smoker #}
+                      <div class="form-group">
+                          <label for="smokerRadioButtonGroup">Current smoker?</label>
+                          <div class="form-group">
+                              <div class="form-check form-check-inline">
+                                  <input name="smoker" class="form-check-input" type="radio" id="isASmoker" value="1">
+                                  <label class="form-check-label" for="smokeYesInlineRadio">Yes</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input name="smoker" class="form-check-input" type="radio" id="notASmoker" value="0">
+                                  <label class="form-check-label" for="smokeNoInlineRadio">No</label>
                               </div>
                           </div>
                       </div>
@@ -112,26 +127,59 @@ Template modified for simplicity to to eliminate unnecessary features.
                       {# get user physical acitvity #}
                       <div class="form-group">
                           <label for="activityRadioButtonGroup">Are you physically active?</label>
-                          <div name="physically_active" class="form-group" id="activityRadioButtonGroup">
+                          <div class="form-group">
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="activityRadioButtonGroup" id="activeYesRadio" value="option1">
-                                  <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                  <input name="activity" class="form-check-input" type="radio" id="yesActivity" value="1">
+                                  <label class="form-check-label" for="activityInlineRadio">Yes</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" name="activityRadioButtonGroup" id="activeNoRadio" value="option2">
-                                  <label class="form-check-label" for="inlineRadio2">No</label>
+                                  <input name="activity" class="form-check-input" type="radio" id="noActivity" value="0">
+                                  <label class="form-check-label" for="activityInlineRadio">No</label>
                               </div>
                           </div>
                       </div>
                   </div>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="submitDataButton">Submit</button>
+{#                  {{ form.submit }}#}
               </form>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="submitDataButton">Submit</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+{#    <div class="form-wrapper">#}
+{#      <h2 class="title">Contact</h2>#}
+{##}
+{#      <form method="POST" action="{{ url_for('user_variables_page') }}">#}
+{##}
+{#          <fieldset class="form-field">#}
+{#              {{ form.birthdate.label }}#}
+{#              {{ form.birthdate(size=20) }}#}
+{#          </fieldset>#}
+{##}
+{#          <fieldset class="form-field">#}
+{#              {{ form.height.label }}#}
+{#              {{ form.height(size=20) }}#}
+{#          </fieldset>#}
+{##}
+{#          <fieldset class="form-field">#}
+{#              {{ form.weight.label }}#}
+{#              {{ form.weight(size=20) }}#}
+{#          </fieldset>#}
+{##}
+{#          {{ form.submit }}#}
+{##}
+{#      </form>#}
+{#    </div>#}
+
     {% block footer %}{% endblock %}
+
+
+    {% block javascript %}
+
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% endblock %}
 
 {% endblock %}

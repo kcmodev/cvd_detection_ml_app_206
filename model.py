@@ -65,17 +65,33 @@ def collect_user_input(user_form_submissions):
     # Columns: Age, Height, Weight, Gender, Systolic BP, Diastolic BP,
     #           Cholesterol, Glucose, Smoking, Alcohol Intake, Physical Activity
 
-    user_selected_age = convert_age_in_days_to_years(date(1985, 5, 27))  # patient age IN DAYS
-    user_selected_height = 66  # patient height
-    user_selected_weight = 185  # patient weight
-    user_selected_gender = 1  # 1 = male, 0 = female
-    user_selected_sbp = 118  # systolic bp
-    user_selected_dbp = 78  # diastolic bp
-    user_selected_cholesterol = 1  # cholesterol measurement 1= normal, 2= above, 3= well above
-    user_selected_glucose = 1  # blood glucose measurement 1= normal, 2= above, 3= well above
-    user_selected_smoking = 0  # smokes: 1 = yes, 0 = no
-    user_selected_alcohol = 1  # consumes alcohol: 1 = yes, 0 = no
-    user_selected_active = 1  # physically active: 1 = yes, 0 = no
+    print(f'input function params: {user_form_submissions}')
+
+    user_selected_age = user_form_submissions[0]['age']  # patient age IN DAYS
+    user_selected_height = user_form_submissions[1]['height']  # patient height
+    user_selected_weight = user_form_submissions[2]['weight']  # patient weight
+    user_selected_gender = user_form_submissions[3]['gender']  # 2 = male, 1 = female
+    user_selected_sbp = user_form_submissions[4]['systolic_bp']  # systolic bp
+    user_selected_dbp = user_form_submissions[5]['diastolic_bp']  # diastolic bp
+    user_selected_glucose = user_form_submissions[6]['blood_glucose']  # blood glucose measurement 1= normal, 2= above, 3= well above
+    user_selected_cholesterol = user_form_submissions[7]['cholesterol']  # cholesterol measurement 1= normal, 2= above, 3= well above
+    user_selected_smoking = user_form_submissions[8]['alcohol_intake']  # smokes: 1 = yes, 0 = no
+    user_selected_alcohol = user_form_submissions[9]['current_smoker']  # consumes alcohol: 1 = yes, 0 = no
+    user_selected_active = user_form_submissions[10]['physically_active']  # physically active: 1 = yes, 0 = no
+
+
+
+    # user_selected_age = convert_age_in_days_to_years(date(1985, 5, 27))  # patient age IN DAYS
+    # user_selected_height = 66  # patient height
+    # user_selected_weight = 185  # patient weight
+    # user_selected_gender = 1  # 1 = male, 0 = female
+    # user_selected_sbp = 118  # systolic bp
+    # user_selected_dbp = 78  # diastolic bp
+    # user_selected_cholesterol = 1  # cholesterol measurement 1= normal, 2= above, 3= well above
+    # user_selected_glucose = 1  # blood glucose measurement 1= normal, 2= above, 3= well above
+    # user_selected_smoking = 0  # smokes: 1 = yes, 0 = no
+    # user_selected_alcohol = 1  # consumes alcohol: 1 = yes, 0 = no
+    # user_selected_active = 1  # physically active: 1 = yes, 0 = no
 
     # Convert user input to Numpy array and use for data to predict with model
     user_selections = np.array([user_selected_age,
@@ -98,12 +114,16 @@ def run_model(loaded_model, user_selections):
     indicator = loaded_model.predict(user_selections[:])
 
 
-def score_model(x_test, y_test):
-    # Scores the model's prediction accuracy
-    score = loaded_model.score(x_test, y_test) * 100
+# def score_model(x_test, y_test):
+#     # Scores the model's prediction accuracy
+#     score = loaded_model.score(x_test, y_test) * 100
+#
+#     if indicator == 0:
+#         print(f'There is a {score:.2f}% chance you do not have heart disease.')
+#     elif indicator == 1:
+#         print(f'Unfortunately there is a {score:.2f}% you could have heart disease.')
 
-    if indicator == 0:
-        print(f'There is a {score:.2f}% chance you do not have heart disease.')
-    elif indicator == 1:
-        print(f'Unfortunately there is a {score:.2f}% you could have heart disease.')
+
+def initiate_model(user_data):
+    collect_user_input(user_data)
 

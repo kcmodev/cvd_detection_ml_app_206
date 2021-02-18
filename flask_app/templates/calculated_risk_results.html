@@ -9,5 +9,17 @@
 
     <h1>Calculated risk page</h1>
 
+{#    <p>{{ user_data }}</p>#}
+
+    <ul>
+        {% for data in user_data %}
+
+            <li>{{ data }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+
     {% block footer %} {% endblock %}
 {% endblock %}
