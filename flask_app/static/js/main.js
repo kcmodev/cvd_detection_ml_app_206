@@ -1,4 +1,6 @@
 document.getElementById("submitDataButton").addEventListener('click', submitUserInput);
+document.getElementById("showDatasetButton").addEventListener('click', showDataset)
+document.getElementById("logoutButton").addEventListener("click", logout)
 
 function submitUserInput() {
     let userAgeInDays;
@@ -17,41 +19,57 @@ function submitUserInput() {
     userAgeInDays = todaysDateDays - bday;
     // console.log(`user age in days: ${userAgeInDays}`);
 
-    let height = document.getElementById("heightInput").value;
-    let weight = document.getElementById("weightInput").value;
-    let gender;
+    userAgeInDays = 13000;
 
-    if (document.getElementById("maleSelected").checked){
-        gender = 2;
-    } else if (document.getElementById("femaleSelected").checked) {
-        gender = 1;
-    }
+    // let height = document.getElementById("heightInput").value;
+    let height = 168
 
-    let systolic_bp = document.getElementById("systolic_bp").value;
-    let diastolic_bp = document.getElementById("diastolic_bp").value;
-    let blood_glucose = document.getElementById("glucoseDropdownSelect").value;
-    let cholesterol = document.getElementById("cholesterolDropdownSelect").value;
+    // let weight = document.getElementById("weightInput").value;
+    let weight = 80
 
-    let alcohol_intake;
-    if (document.getElementById("yesAlcoholUse").checked) {
-        alcohol_intake = 1
-    } else if (document.getElementById("noAlcoholUse").checked) {
-        alcohol_intake = 0
-    }
+    let gender=2
+    // let gender;
+    // if (document.getElementById("maleSelected").checked){
+    //     gender = 2;
+    // } else if (document.getElementById("femaleSelected").checked) {
+    //     gender = 1;
+    // }
 
-    let current_smoker;
-    if (document.getElementById("isASmoker").checked) {
-        current_smoker = 1
-    } else if (document.getElementById("notASmoker").checked) {
-        current_smoker = 0
-    }
+    // let systolic_bp = document.getElementById("systolic_bp").value;
+    let systolic_bp = 120
 
-    let physically_active;
-    if (document.getElementById("yesActivity").checked) {
-        physically_active = 1
-    } else if (document.getElementById("noActivity").checked) {
-        physically_active = 0
-    }
+    // let diastolic_bp = document.getElementById("diastolic_bp").value;
+    let diastolic_bp = 80
+
+    // let blood_glucose = document.getElementById("glucoseDropdownSelect").value;
+    let blood_glucose = 1
+
+    // let cholesterol = document.getElementById("cholesterolDropdownSelect").value;
+    let cholesterol = 1
+
+    let alcohol_intake = 1
+    // let alcohol_intake;
+    // if (document.getElementById("yesAlcoholUse").checked) {
+    //     alcohol_intake = 1
+    // } else if (document.getElementById("noAlcoholUse").checked) {
+    //     alcohol_intake = 0
+    // }
+
+    let current_smoker = 0
+    // let current_smoker;
+    // if (document.getElementById("isASmoker").checked) {
+    //     current_smoker = 1
+    // } else if (document.getElementById("notASmoker").checked) {
+    //     current_smoker = 0
+    // }
+
+    let physically_active = 1
+    // let physically_active;
+    // if (document.getElementById("yesActivity").checked) {
+    //     physically_active = 1
+    // } else if (document.getElementById("noActivity").checked) {
+    //     physically_active = 0
+    // }
 
     // console.log(`testing values - age in days: ${userAgeInDays}, ht: ${height}, wgt: ${weight}, gender: ${gender},
 // bp: ${systolic_bp}/${diastolic_bp}, gluc: ${blood_glucose}, chol: ${cholesterol}, alch: ${alcohol_intake}, phys: ${physically_active}`);
@@ -104,3 +122,16 @@ function sendResults(data) {
     });
 }
 
+function showDataset() {
+    $.ajax({
+       type: "GET",
+       url: "/dashapp/"
+    });
+}
+
+function logout() {
+    $.ajax({
+       type: "GET",
+       url: "/logout"
+    });
+}

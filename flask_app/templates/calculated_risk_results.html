@@ -1,25 +1,61 @@
 {%  extends 'base.html' %}
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/data.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 
 {% block body %}
     {% block header %} {% endblock %}
 
-    <h1>Calculated risk page</h1>
+{#
+Template for login form acquired from https://freefrontend.com/bootstrap-login-forms/
+Template title: "BOOTSTRAP LOGIN SCREEN WITH FLOATING LABELS"
+Template Author: StartBootstrap
+Published: May 8, 2019
 
+Template modified for simplicity to to eliminate unnecessary features.
+#}
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-6">
+            <div class="card-header">
+                <img src="{{ url_for('static', filename='images/wgu_logo.png') }}" class="card-img">
+            </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ result_string }}</h5>
+            <form class="form-signin" >
+{#              <div class="form-label-group">#}
+{#                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" autofocus>#}
+{#                <label for="inputEmail">Email address</label>#}
+{#              </div>#}
+{##}
+{#              <div class="form-label-group">#}
+{#                <input type="password" id="inputPassword" class="form-control" placeholder="Password">#}
+{#                <label for="inputPassword">Password</label>#}
+{#              </div>#}
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="showDatasetButton" formaction="showDataset()">Show Dataset</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="logoutButton">Logout</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{#    <h1>Calculated risk page</h1>#}
+{##}
 {#    <p>{{ user_data }}</p>#}
+{#    <h1>{{  result_string }}</h1>#}
+{#    <ul>#}
+{#        {% for data in user_data %}#}
+{##}
+{#            <li>{{ data }}</li>#}
+{##}
+{#        {% endfor %}#}
+{##}
+{#    </ul>#}
 
-    <ul>
-        {% for data in user_data %}
-
-            <li>{{ data }}</li>
-
-        {% endfor %}
-
-    </ul>
-
-
+    <script src="/flask_app/static/js/main.js"></script>
     {% block footer %} {% endblock %}
 {% endblock %}

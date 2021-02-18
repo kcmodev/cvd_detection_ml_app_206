@@ -8,6 +8,7 @@ from model import initiate_model
 @app.route('/')
 @app.route('/index')
 def index():
+    session.clear()
     return render_template('index.html', title='Login')
 
 
@@ -26,10 +27,22 @@ def show_risk_results():
 
     user_input = session['json']
     print(f'session json: {user_input} type: {type(user_input)}')
-    initiate_model(user_input)
+    cvd_result, model_score, result_string = initiate_model(user_input)
 
-    return render_template('calculated_risk_results.html', title='Results', user_data=user_input)
+    return render_template('calculated_risk_results.html',
+                           title='Results',
+                           user_data=user_input,
+                           cvd_result=cvd_result,
+                           model_score=model_score,
+                           result_string=result_string)
 
-# @app.route('/dashapp/')
-# def dashboard_page():
-#     return render_template('data.html')
+
+@app.route('/dashapp/')
+def dashboard_page():
+    return render_template('data.html')
+
+
+@app.route('/logout')
+def logoff():
+    session.clear()
+    return render_template('index.html', title='Login')
