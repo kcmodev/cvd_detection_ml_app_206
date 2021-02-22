@@ -150,38 +150,11 @@
     </div>
   </div>
 
-{#    <div class="form-wrapper">#}
-{#      <h2 class="title">Contact</h2>#}
-{##}
-{#      <form method="POST" action="{{ url_for('user_variables_page') }}">#}
-{##}
-{#          <fieldset class="form-field">#}
-{#              {{ form.birthdate.label }}#}
-{#              {{ form.birthdate(size=20) }}#}
-{#          </fieldset>#}
-{##}
-{#          <fieldset class="form-field">#}
-{#              {{ form.height.label }}#}
-{#              {{ form.height(size=20) }}#}
-{#          </fieldset>#}
-{##}
-{#          <fieldset class="form-field">#}
-{#              {{ form.weight.label }}#}
-{#              {{ form.weight(size=20) }}#}
-{#          </fieldset>#}
-{##}
-{#          {{ form.submit }}#}
-{##}
-{#      </form>#}
-{#    </div>#}
-
     {% block footer %}{% endblock %}
 
 
     {% block javascript %}
-
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
+        <script src="{{ url_for('static', filename='js/determine_risk.js') }}"></script>
     {% endblock %}
 
 {% endblock %}

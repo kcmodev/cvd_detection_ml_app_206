@@ -1,6 +1,4 @@
 document.getElementById("submitDataButton").addEventListener('click', submitUserInput);
-document.getElementById("showDatasetButton").addEventListener('click', showDataset)
-document.getElementById("logoutButton").addEventListener("click", logout)
 
 function submitUserInput() {
     let userAgeInDays;
@@ -119,19 +117,5 @@ function sendResults(data) {
         });
 
         }
-    });
-}
-
-function showDataset() {
-    $.ajax({
-       type: "GET",
-       url: "/dashapp/"
-    });
-}
-
-function logout() {
-    $.ajax({
-       type: "GET",
-       url: "/logout"
     });
 }
