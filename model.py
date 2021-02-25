@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 import pickle
-from datetime import date, datetime
-from dateutil.relativedelta import relativedelta
 
 # Classification ML libraries
 from sklearn.model_selection import train_test_split
@@ -10,10 +8,18 @@ from sklearn.model_selection import train_test_split
 # Classification model scoring library
 from sklearn.metrics import accuracy_score
 
+# Array to store dict of string(s) to describe test results
 result_string = []
 
 
 def evaluate_predictions(y_actual, y_predicted):
+    """
+    Runs model to compare predictions to actual results for a numerical representation of the model's accuracy
+    at the moment the model is used.
+    :param y_actual:
+    :param y_predicted:
+    :return:
+    """
 
     accuracy = accuracy_score(y_actual, y_predicted) * 100  # Scores accuracy of model's prediction
     print(f'Accuracy: {accuracy:.2f}%')
@@ -21,27 +27,23 @@ def evaluate_predictions(y_actual, y_predicted):
     return accuracy
 
 
-def convert_birthdate_to_age_in_days(birthdate):
-    today = date.today().toordinal()  # Converts today's date into the total number of days since epoch
-    user_age_in_days = today - birthdate.toordinal()  # Converts birthday to days since epoch and subtracts from today
-
-    return user_age_in_days
-
-
-def convert_age_in_days_to_years(birthdate_in_days):
-    delta = relativedelta(date.today(), date.fromordinal(birthdate_in_days))
-    years = datetime.today().year - (delta.years + 1)
-
-    return years
-
-
 def read_data_file():
+    """
+    Uses pandas to read in stored data file to assess accuracy.
+    :return:
+    """
     cvd_data = pd.read_csv('flask_app/static/data/sanitized_cvd_data.csv')
 
     return cvd_data
 
 
 def determine_test_sets(data):
+    """
+    Determines size of training and testing data sets.
+    :param data:
+    :return:
+    """
+
     # Randomizes samples for training
     cvd_data_shuffled = data.sample(frac=1)
 
@@ -58,19 +60,25 @@ def determine_test_sets(data):
 
 
 def load_trained_model():
+    """
+    Loads saved pickle file of the trained model.
+    :return:
+    """
     # Load the trained model
     file = open('flask_app/static/saved_model/cvd_random_forest_classifier_model.pkl', 'rb')
     loaded_model = pickle.load(file)
-    print('Previously saved model loaded.')
 
     return loaded_model
 
 
 def parse_user_input(user_form_submissions):
+    """
+    Collects form data to use as user input for the model to use to make a prediction.
+    :param user_form_submissions:
+    :return:
+    """
     # Columns: Age, Height, Weight, Gender, Systolic BP, Diastolic BP,
     #           Cholesterol, Glucose, Smoking, Alcohol Intake, Physical Activity
-
-    print(f'input function params: {user_form_submissions}')
 
     user_selected_age = user_form_submissions[0]['age']
     user_selected_height = user_form_submissions[1]['height']  # patient height
@@ -87,6 +95,7 @@ def parse_user_input(user_form_submissions):
     user_selected_active = user_form_submissions[10]['physically_active']  # physically active: 1 = yes, 0 = no
 
     # Convert user input to Numpy array and use for data to predict with model
+    # Reshaped and used as a record with a single row
     user_selections = np.array([user_selected_age,
                                 user_selected_height,
                                 user_selected_weight,
@@ -110,6 +119,14 @@ def run_model(loaded_model, user_selections):
 
 
 def score_model(cvd_prediction, loaded_model):
+    """
+    Uses the model's prediction and the score to generate a result for the user and a percent likelihood
+    it is correct.
+    :param cvd_prediction:
+    :param loaded_model:
+    :return:
+    """
+
     # Scores the model's prediction accuracy
     x_train, x_test, y_train, y_test = determine_test_sets(read_data_file())
     score = loaded_model.score(x_test, y_test) * 100
@@ -123,6 +140,12 @@ def score_model(cvd_prediction, loaded_model):
 
 
 def initiate_model(user_data):
+    """
+    Runs and scores the model using the user's input.
+    :param user_data:
+    :return:
+    """
+
     user_input = parse_user_input(user_data)
     loaded_model = load_trained_model()
 

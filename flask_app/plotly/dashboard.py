@@ -3,10 +3,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
 
+import plotly as plt
 import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import plotly.io as pio
 import pandas as pd
-
-from model import convert_age_in_days_to_years
+import numpy as np
 
 
 def init_dashboard(server):
@@ -24,52 +27,63 @@ def init_dashboard(server):
     df = pd.read_csv("flask_app/static/data/readable_cvd_data.csv")
     cholesterol = df['Cholesterol']
     age = df['Age (years)']
-    cvd_status = df['CVD Status']
+    height = df['Height (cm)']
+    weight = df['Weight (kg)']
 
-    fig = px.density_heatmap(df, x=age, y=cvd_status)
-    fig2 = px.box(df, x=age, y=cholesterol)
-    fig3 = px.line(df, x=age, y=cholesterol)
+    smoker_pos_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['positive'])])
+    smoker_neg_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['negative'])])
+    non_smoker_pos_cvd = len(df[(df['Smoker'] == 'no') & df['CVD Status'].isin(['positive'])])
+    non_smoker_neg_cvd = len(df[(df['Smoker'] == 'no') & df['CVD Status'].isin(['negative'])])
+
+    smoker_cvd_correlation_2 = {"Status": ["CVD Negative", "CVD Positive"],
+                                "Smokers": [smoker_neg_cvd, smoker_pos_cvd],
+                                "Non Smokers": [non_smoker_neg_cvd, non_smoker_pos_cvd]
+                                }
+
+    fig = px.density_heatmap(df, x=age, y=cholesterol)
+    fig2 = px.scatter(df, x=height, y=weight)
+    fig3 = px.pie(smoker_cvd_correlation_2, values="Non Smokers", names="Status", title="Non Smokers")
+    fig4 = px.pie(smoker_cvd_correlation_2, values="Smokers", names="Status", title="Smokers")
 
     # Create Dash Layout
-    # dash_app.layout = html.Div(id='dash-container')
     dash_app.layout = html.Div(id='dash-container', children=[
         html.H1(children='List of data element cards'),
 
         html.H1(children='''
-            Heat map
-            Cholesterol correlated to age:
+            Heat map of the relation between cholesterol level and age in the dataset.
         '''),
-
         dcc.Graph(
-            id='graph',
+            id='heat_map',
             figure=fig,
             className='graphBox'
         ),
 
         html.H1(children='''
-                Next graph.
+                Scatter plot of height as it relates to weight in the dataset.
             '''),
-
         dcc.Graph(
-            id='example-graph-2',
+            id='scatter_plot',
             figure=fig2,
             className='graphBox'
         ),
 
         html.H1(children='''
-                    Next graph.
+                    Pie charts representing rates of CVD in smokers vs non smokers.
                 '''),
-
         dcc.Graph(
-            id='example-graph-3',
+            id='pie_graph_2',
             figure=fig3,
+            className='graphBox'
+        ),
+        dcc.Graph(
+            id='pie_graph_1',
+            figure=fig4,
             className='graphBox'
         ),
 
         html.H1(children='''
                 List of records
             '''),
-
         dash_table.DataTable(
             id='table',
             columns=[
@@ -92,8 +106,8 @@ def init_dashboard(server):
                 'selector': '.dash-spreadsheet-container',
                 'rule': 'border: 1px solid black; border-radius: 15px; overflow: hidden;'
             }]
-        )
+        ),
 
+        html.Button('Go Back', id='goBackButton')
     ])
-
     return dash_app.server

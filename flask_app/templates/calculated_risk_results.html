@@ -24,10 +24,8 @@ Template modified for simplicity to to eliminate unnecessary features.
                 </div>
               <div class="card-body">
                 <h5 class="card-title text-center">{{ result_string }}</h5>
-                <form class="form-signin" >
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="showDatasetButton" formaction="showDataset()">Show Dataset</button>
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="logoutButton">Logout</button>
-                </form>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="showDatasetButton" onclick="window.location.href = '{{ url_for('dashboard_page') }}'">Show Dataset</button>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="logoutButton">Logout</button>
               </div>
             </div>
           </div>
