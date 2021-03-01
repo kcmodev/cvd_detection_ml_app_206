@@ -14,12 +14,16 @@ def index():
     return render_template('index.html', title='Login')
 
 
-@app.route('/determine_risk')
+@app.route('/determine_risk', methods=['GET', 'POST'])
 def user_variables_page():
     """
     Renders form to accept user input
     :return:
     """
+    if request.method == 'POST':
+        session.clear()
+        return json.dumps({'success': True}), 200
+
     return render_template('determine_risk.html', title='Vitals')
 
 

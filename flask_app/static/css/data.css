@@ -9,7 +9,7 @@ body {
     color: #aaa
 }
 
-#goBackButton {
+#goBackButton #logoutButton{
     font-size: 80%;
     border-radius: 5rem;
     letter-spacing: .1rem;

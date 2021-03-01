@@ -24,23 +24,44 @@ def init_dashboard(server):
     age = df['Age (years)']
     height = df['Height (cm)']
     weight = df['Weight (kg)']
+    gender = df['Gender']
 
-    smoker_pos_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['positive'])])
-    smoker_neg_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['negative'])])
-    non_smoker_pos_cvd = len(df[(df['Smoker'] == 'no') & df['CVD Status'].isin(['positive'])])
-    non_smoker_neg_cvd = len(df[(df['Smoker'] == 'no') & df['CVD Status'].isin(['negative'])])
+    # Retrieves smoker data from the imported dataframe and correlates it to whether the patient/user is a smoker
+    # smoker_pos_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['positive'])])
+    # smoker_neg_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['negative'])])
+    # non_smoker_pos_cvd = len(df[(df['Smoker'] == 'no') & df['CVD Status'].isin(['positive'])])
+    # non_smoker_neg_cvd = len(df[(df['Smoker'] == 'no') & df['CVD Status'].isin(['negative'])])
+
+    smoker_pos_cvd = len(df[(df['Cholesterol'] == 'well above normal') & df['CVD Status'].isin(['positive'])])
+    smoker_neg_cvd = len(df[(df['Cholesterol'] == 'well above normal') & df['CVD Status'].isin(['negative'])])
+    non_smoker_pos_cvd = len(df[(df['Cholesterol'] == 'above normal') & df['CVD Status'].isin(['positive'])])
+    non_smoker_neg_cvd = len(df[(df['Cholesterol'] == 'above normal') & df['CVD Status'].isin(['negative'])])
+
+    # Converts the above correlation into a new dataframe
+    # smoker_cvd_correlation_2 = {"Status": ["CVD Negative", "CVD Positive"],
+    #                             "Smokers": [smoker_neg_cvd, smoker_pos_cvd],
+    #                             "Non Smokers": [non_smoker_neg_cvd, non_smoker_pos_cvd]
+    #                             }
 
     smoker_cvd_correlation_2 = {"Status": ["CVD Negative", "CVD Positive"],
-                                "Smokers": [smoker_neg_cvd, smoker_pos_cvd],
-                                "Non Smokers": [non_smoker_neg_cvd, non_smoker_pos_cvd]
+                                "Well Above": [smoker_neg_cvd, smoker_pos_cvd],
+                                "Above": [non_smoker_neg_cvd, non_smoker_pos_cvd]
                                 }
 
+    # Heatmap showing relation between age and cholesterol levels
     fig = px.density_heatmap(df, x=age, y=cholesterol)
-    fig2 = px.scatter(df, x=height, y=weight)
-    fig3 = px.pie(smoker_cvd_correlation_2, values="Non Smokers", names="Status", title="Non Smokers")
-    fig4 = px.pie(smoker_cvd_correlation_2, values="Smokers", names="Status", title="Smokers")
 
-    # Create Dash Layout
+    # Scatter plot showing relation between height and weight levels
+    fig2 = px.scatter(df, x=height, y=weight, color=gender)
+
+    # Figures for both pie charts. One each for smokers and non smokers
+    # fig3 = px.pie(smoker_cvd_correlation_2, values="Non Smokers", names="Status", title="Non Smokers")
+    # fig4 = px.pie(smoker_cvd_correlation_2, values="Smokers", names="Status", title="Smokers")
+
+    fig3 = px.pie(smoker_cvd_correlation_2, values="Well Above", names="Status", title="Cholesterol WELL Above")
+    fig4 = px.pie(smoker_cvd_correlation_2, values="Above", names="Status", title="Cholesterol Above")
+
+    # Dash Layout
     dash_app.layout = html.Div(id='dash-container', children=[
         html.H1(children='List of data element cards'),
 
@@ -66,12 +87,12 @@ def init_dashboard(server):
                     Pie charts representing rates of CVD in smokers vs non smokers.
                 '''),
         dcc.Graph(
-            id='pie_graph_2',
+            id='pie_graph_1',
             figure=fig3,
             className='graphBox'
         ),
         dcc.Graph(
-            id='pie_graph_1',
+            id='pie_graph_2',
             figure=fig4,
             className='graphBox'
         ),
@@ -101,8 +122,6 @@ def init_dashboard(server):
                 'selector': '.dash-spreadsheet-container',
                 'rule': 'border: 1px solid black; border-radius: 15px; overflow: hidden;'
             }]
-        ),
-
-        html.Button('Go Back', id='goBackButton')
+        )
     ])
     return dash_app.server

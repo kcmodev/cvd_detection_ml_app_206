@@ -1,6 +1,6 @@
-document.getElementById("logoutButton").addEventListener("click", logout)
+document.getElementById("logoutButton").addEventListener("click", logoutUser)
 
-function logout() {
+function logoutUser() {
     $.ajax({
        type: "GET",
        url: "/index",

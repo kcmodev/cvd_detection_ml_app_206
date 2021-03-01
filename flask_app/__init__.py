@@ -8,10 +8,10 @@ def init_app():
     app.config.from_object('config.Config')
 
     with app.app_context():
-        # Import parts of our core Flask app
+        # Import routes from core Flask app
         from . import routes
 
-        # Import Dash application
+        # Initialize Plotly Dash app dashboard using Flask as the server
         from .plotly.dashboard import init_dashboard
         app = init_dashboard(app)
 
