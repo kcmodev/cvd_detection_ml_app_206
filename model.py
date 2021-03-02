@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # Array to store dict of string(s) to describe test results
-result_string = []
+# result_string = []
 
 
 def evaluate_predictions(y_actual, y_predicted):
@@ -127,14 +127,16 @@ def score_model(cvd_prediction, loaded_model):
     :return:
     """
 
+    result_string = ""
+
     # Scores the model's prediction accuracy
     x_train, x_test, y_train, y_test = determine_test_sets(read_data_file())
     score = loaded_model.score(x_test, y_test) * 100
 
     if cvd_prediction == 0:
-        result_string.append({'result': f'There is a {score:.2f}% chance you do not have heart disease.'})
+        result_string = f'There is a {score:.2f}% chance you do not have heart disease.'
     elif cvd_prediction == 1:
-        result_string.append({'result': f'Unfortunately there is a {score:.2f}% you could have heart disease.'})
+        result_string = f'Unfortunately there is a {score:.2f}% you could have heart disease.'
 
     return score, result_string
 

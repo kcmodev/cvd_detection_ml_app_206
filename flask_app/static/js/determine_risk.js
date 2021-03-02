@@ -63,6 +63,8 @@ function submitUserInput() {
         {"physically_active": physically_active}
         ];
 
+    // console.log(`Data being sent: ${allData}`)
+    console.log(`Data being sent as JSON: ${JSON.stringify(allData)}`)
     sendResults(allData)
 }
 
@@ -75,6 +77,7 @@ function sendResults(data) {
         contentType: 'application/json',
 
         success: function (data) {
+            console.log(`Post of \"${data}\" sent successfully`)
 
         console.log('sending GET request')
         $.ajax({

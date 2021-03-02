@@ -25,6 +25,7 @@ def init_dashboard(server):
     height = df['Height (cm)']
     weight = df['Weight (kg)']
     gender = df['Gender']
+    cvd_status = df['CVD Status']
 
     # Retrieves smoker data from the imported dataframe and correlates it to whether the patient/user is a smoker
     # smoker_pos_cvd = len(df[(df['Smoker'] == 'yes') & df['CVD Status'].isin(['positive'])])
@@ -52,7 +53,7 @@ def init_dashboard(server):
     fig = px.density_heatmap(df, x=age, y=cholesterol)
 
     # Scatter plot showing relation between height and weight levels
-    fig2 = px.scatter(df, x=height, y=weight, color=gender)
+    fig2 = px.scatter(df, x=height, y=weight, color=cvd_status)
 
     # Figures for both pie charts. One each for smokers and non smokers
     # fig3 = px.pie(smoker_cvd_correlation_2, values="Non Smokers", names="Status", title="Non Smokers")
