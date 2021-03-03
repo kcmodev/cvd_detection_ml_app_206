@@ -1,7 +1,7 @@
 """Routes for parent Flask app."""
-from flask import render_template, request, json, session, redirect, make_response
+from flask import render_template, request, json, session, redirect
 from flask import current_app as app
-import model
+from flask_app import model
 
 
 @app.route('/')

@@ -5,34 +5,13 @@ import pickle
 # Classification ML libraries
 from sklearn.model_selection import train_test_split
 
-# Classification model scoring library
-from sklearn.metrics import accuracy_score
-
-# Array to store dict of string(s) to describe test results
-# result_string = []
-
-
-def evaluate_predictions(y_actual, y_predicted):
-    """
-    Runs model to compare predictions to actual results for a numerical representation of the model's accuracy
-    at the moment the model is used.
-    :param y_actual:
-    :param y_predicted:
-    :return:
-    """
-
-    accuracy = accuracy_score(y_actual, y_predicted) * 100  # Scores accuracy of model's prediction
-    print(f'Accuracy: {accuracy:.2f}%')
-
-    return accuracy
-
 
 def read_data_file():
     """
     Uses pandas to read in stored data file to assess accuracy.
     :return:
     """
-    cvd_data = pd.read_csv('flask_app/static/data/sanitized_cvd_data.csv')
+    cvd_data = pd.read_csv('static/data/sanitized_cvd_data.csv')
 
     return cvd_data
 
@@ -65,7 +44,7 @@ def load_trained_model():
     :return:
     """
     # Load the trained model
-    file = open('flask_app/static/saved_model/cvd_random_forest_classifier_model.pkl', 'rb')
+    file = open('static/saved_model/cvd_random_forest_classifier_model.pkl', 'rb')
     loaded_model = pickle.load(file)
 
     return loaded_model
