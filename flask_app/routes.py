@@ -5,7 +5,7 @@ import model
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET'])
 def index():
     """
     Renders login screen
@@ -14,15 +14,12 @@ def index():
     return render_template('index.html', title='Login')
 
 
-@app.route('/determine_risk')
+@app.route('/determine_risk', methods=['GET'])
 def user_variables_page():
     """
     Renders form to accept user input
     :return:
     """
-    # if request.method == 'POST':
-    # session.clear()
-    # return json.dumps({'success': True}), 200
 
     return render_template('determine_risk.html', title='Vitals')
 
@@ -36,11 +33,10 @@ def show_risk_results():
 
     if request.method == 'POST':
         session['json'] = request.get_json()  # get JSON from ajax request to pass user input to model
-
         return json.dumps({'success': True}), 200
 
 
-@app.route('/calculated_risk_results')
+@app.route('/calculated_risk_results', methods=['GET'])
 def show_risk_results_page():
     """
     Takes GET request, uses session data to determine and display results.
@@ -56,7 +52,7 @@ def show_risk_results_page():
                            result_string=result_string)
 
 
-@app.route('/dashapp')
+@app.route('/dashapp', methods=['GET'])
 def dashboard_page():
     """
     Redirects to Plotly dashboard.
@@ -66,11 +62,12 @@ def dashboard_page():
     return redirect('/dashapp/')
 
 
-@app.route('/logout')
-def logoff():
+@app.route('/logout', methods=['GET'])
+def logout_user_and_clear_session_data():
     """
     Clears session data and returns user to the login screen.
     :return:
     """
+
     session.clear()
-    return json.dumps({'success': True}), 200
+    return redirect('/index')

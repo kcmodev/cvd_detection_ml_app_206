@@ -25,7 +25,7 @@ Template modified for simplicity to to eliminate unnecessary features.
               <div class="card-body">
                 <h5 class="card-title text-center">{{ result_string }}</h5>
                   <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="showDatasetButton" onclick="window.location.href = '{{ url_for('dashboard_page') }}'">Show Dataset</button>
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="logoutButton">Logout</button>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="logoutButton" onclick="window.location.href = '{{ url_for('logout_user_and_clear_session_data') }}'">Logout</button>
               </div>
             </div>
           </div>
@@ -33,7 +33,6 @@ Template modified for simplicity to to eliminate unnecessary features.
     </div>
 
     {% block javascript %}
-    <script src="{{ url_for('static', filename='js/show_results.js') }}"></script>
     {%  endblock %}
 
     {% block footer %} {% endblock %}
