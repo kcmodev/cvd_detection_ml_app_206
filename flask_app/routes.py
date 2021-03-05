@@ -43,13 +43,14 @@ def show_risk_results_page():
     :return:
     """
     user_input = session['json']  # saves user form submission as session data
-    cvd_result, model_score, result_string = model.initiate_model(user_input)  # runs model to make the prediction
+    cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(user_input)  # runs model to make the prediction
     return render_template('calculated_risk_results.html',
                            title='Results',
                            user_data=user_input,
                            cvd_result=cvd_result,
                            model_score=model_score,
-                           result_string=result_string)
+                           result_string=result_string,
+                           categories=high_risk_categories)
 
 
 @app.route('/dashapp', methods=['GET'])

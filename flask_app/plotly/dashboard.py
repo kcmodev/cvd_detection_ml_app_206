@@ -44,7 +44,7 @@ def init_dashboard(server):
     cholesterol_normal_pos_cvd = len(df[(cholesterol == 'normal') & cvd_status.isin(['positive'])])
     cholesterol_normal_neg_cvd = len(df[(cholesterol == 'normal') & cvd_status.isin(['negative'])])
 
-    fig = px.bar(importance_df, x='Importance',
+    fig = px.bar(importance_df.sort_values(by=['Importance']), x='Importance',
                  y='Variable',
                  title='Health variables importance relative to the likelihood of testing positive for CVD')
 

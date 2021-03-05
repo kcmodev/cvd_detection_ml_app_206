@@ -22,14 +22,32 @@ Template modified for simplicity to to eliminate unnecessary features.
                 <div class="card-header">
                     <img src="{{ url_for('static', filename='images/wgu_logo.png') }}" class="card-img">
                 </div>
-              <div class="card-body">
-                <h5 class="card-title text-center">{{ result_string }}</h5>
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="showDatasetButton" onclick="window.location.href = '{{ url_for('dashboard_page') }}'">Show Dataset</button>
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="logoutButton" onclick="window.location.href = '{{ url_for('logout_user_and_clear_session_data') }}'">Logout</button>
-              </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ result_string }}</h5>
+                </div>
+                <hr/>
+                <div class="card-body">
+                    {%  if categories != None %}
+                        <h5 class="card-title text-center">Your risk factors are as follows: </h5>
+                        {% for key, value in categories.items() %}
+                            <div class="card-body">
+                                <h5 class="card-title text-left">{{ key }}:</h5>
+                                <h5 class="card-title text-center">{{ value }}</h5>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <h5>No serious risk factors found!</h5>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                          <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="showDatasetButton" onclick="window.location.href = '{{ url_for('dashboard_page') }}'">Show Dataset</button>
+                          <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="logoutButton" onclick="window.location.href = '{{ url_for('logout_user_and_clear_session_data') }}'">Logout</button>
+                </div>
             </div>
           </div>
         </div>
+
+
     </div>
 
     {% block javascript %}

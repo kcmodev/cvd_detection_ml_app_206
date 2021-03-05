@@ -11,7 +11,7 @@ def read_data_file():
     Uses pandas to read in stored data file to assess accuracy.
     :return:
     """
-    cvd_data = pd.read_csv('static/data/sanitized_cvd_data.csv')
+    cvd_data = pd.read_csv('flask_app/static/data/sanitized_cvd_data.csv')
 
     return cvd_data
 
@@ -44,7 +44,7 @@ def load_trained_model():
     :return:
     """
     # Load the trained model
-    file = open('static/saved_model/cvd_random_forest_classifier_model.pkl', 'rb')
+    file = open('flask_app/static/saved_model/cvd_random_forest_classifier_model.pkl', 'rb')
     loaded_model = pickle.load(file)
 
     return loaded_model
@@ -56,21 +56,37 @@ def parse_user_input(user_form_submissions):
     :param user_form_submissions:
     :return:
     """
+    high_risk_categories = {}
+
     # Columns: Age, Height, Weight, Gender, Systolic BP, Diastolic BP,
     #           Cholesterol, Glucose, Smoking, Alcohol Intake, Physical Activity
-
     user_selected_age = user_form_submissions[0]['age']
-    user_selected_height = user_form_submissions[1]['height']  # patient height
-    user_selected_weight = user_form_submissions[2]['weight']  # patient weight
+    user_selected_height = int(user_form_submissions[1]['height'])  # patient height
+    user_selected_weight = int(user_form_submissions[2]['weight'])  # patient weight
     user_selected_gender = user_form_submissions[3]['gender']  # 2 = male, 1 = female
-    user_selected_sbp = user_form_submissions[4]['systolic_bp']  # systolic bp
+    user_selected_sbp = int(user_form_submissions[4]['systolic_bp'])  # systolic bp
+
+    if user_selected_sbp > 130:
+        high_risk_categories['blood pressure'] = 'Elevated blood pressure risk factor found.'
+
     user_selected_dbp = user_form_submissions[5]['diastolic_bp']  # diastolic bp
+
+    user_bmi = user_selected_weight / ((user_selected_height / 100) ** 2)
+
+    if user_bmi >= 25:
+        high_risk_categories['bmi'] = 'Elevated body mass index risk factor found'
+
     # blood glucose measurement 1= normal, 2= above, 3= well above
     user_selected_glucose = user_form_submissions[6]['blood_glucose']
+
     # cholesterol measurement 1= normal, 2= above, 3= well above
-    user_selected_cholesterol = user_form_submissions[7]['cholesterol']
-    user_selected_smoking = user_form_submissions[8]['alcohol_intake']  # smokes: 1 = yes, 0 = no
-    user_selected_alcohol = user_form_submissions[9]['current_smoker']  # consumes alcohol: 1 = yes, 0 = no
+    user_selected_cholesterol = int(user_form_submissions[7]['cholesterol'])
+
+    if user_selected_cholesterol == 3:
+        high_risk_categories['cholesterol'] = 'Elevated cholesterol risk factor found'
+
+    user_selected_alcohol = user_form_submissions[8]['alcohol_intake']  # smokes: 1 = yes, 0 = no
+    user_selected_smoking = user_form_submissions[9]['current_smoker']  # consumes alcohol: 1 = yes, 0 = no
     user_selected_active = user_form_submissions[10]['physically_active']  # physically active: 1 = yes, 0 = no
 
     # Convert user input to Numpy array and use for data to predict with model
@@ -87,7 +103,7 @@ def parse_user_input(user_form_submissions):
                                 user_selected_alcohol,
                                 user_selected_active]).reshape(1, -1)
 
-    return user_selections
+    return user_selections, high_risk_categories
 
 
 def run_model(loaded_model, user_selections):
@@ -113,9 +129,11 @@ def score_model(cvd_prediction, loaded_model):
     score = loaded_model.score(x_test, y_test) * 100
 
     if cvd_prediction == 0:
-        result_string = f'There is a {score:.2f}% chance you do not have heart disease.'
+        result_string = f'You have a low risk of either having or developing heart disease. ' \
+                        f'\nModel accuracy score: {score:.2f}% '
     elif cvd_prediction == 1:
-        result_string = f'Unfortunately there is a {score:.2f}% you could have heart disease.'
+        result_string = f'You have a high risk of developing heart disease. ' \
+                        f'\nModel accuracy score: {score:.2f}%.'
 
     return score, result_string
 
@@ -127,14 +145,14 @@ def initiate_model(user_data):
     :return:
     """
 
-    user_input = parse_user_input(user_data)
+    user_input, user_high_risk_categories = parse_user_input(user_data)
     loaded_model = load_trained_model()
 
     cvd_prediction_result = run_model(loaded_model, user_input)
 
     prediction_accuracy_score, prediction_result_string = score_model(cvd_prediction_result, loaded_model)
 
-    return cvd_prediction_result, prediction_accuracy_score, prediction_result_string
+    return cvd_prediction_result, prediction_accuracy_score, prediction_result_string, user_high_risk_categories
 
 
 
