@@ -25,13 +25,13 @@ Template modified for simplicity to to eliminate unnecessary features.
             <h5 class="card-title text-center">Sign In</h5>
             <form class="form-signin" >
               <div class="form-label-group">
-                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address"{# required #} autofocus>
-                <label for="inputEmail">Email address</label>
+                <input type="text" id="inputUsername" class="form-control" placeholder="Username"{# required #} autofocus>
+{#                <label for="inputEmail">Email address</label>#}
               </div>
 
               <div class="form-label-group">
-                <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" {# required #}>
-                <label for="inputPassword">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" {# required #}>
+{#                <label for="inputPassword">Password</label>#}
               </div>
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  formaction="{{ url_for('user_variables_page') }}">Sign in</button>
             </form>

@@ -1,22 +1,24 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 import dash_table
 
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-
 import pandas as pd
 
 
 def init_dashboard(server):
     """Create a Plotly Dash dashboard."""
     dash_app = dash.Dash(
+        __name__,
         server=server,
         routes_pathname_prefix='/dashapp/',
         external_stylesheets=[
-            '/static/css/data.css'
+            '/static/css/data.css',
+            dbc.themes.BOOTSTRAP
         ]
     )
 
@@ -46,7 +48,7 @@ def init_dashboard(server):
 
     fig = px.bar(importance_df.sort_values(by=['Importance']), x='Importance',
                  y='Variable',
-                 title='Health variables importance relative to the likelihood of testing positive for CVD')
+                 title='Health variables importance relative to determining the likelihood of testing positive for CVD')
 
     # Scatter plot showing relation between height and weight levels
     fig2 = px.scatter(df, x=height, y=weight, color=cvd_status, title='Height as it relates to weight')
@@ -93,26 +95,42 @@ def init_dashboard(server):
 
     # Dash Layout
     dash_app.layout = html.Div(id='dash-container', children=[
-        html.H1(children='List of analysed data elements:'),
 
-        # html.H1(children='''
-        #     Heat map of the relation between cholesterol level and age in the dataset.
-        # '''),
+        html.Div(children=[
+            html.Nav(className="navbar navbar-expand-lg navbar-light bg-light", children=[
+                html.Div(className="collapse navbar-collapse", id="navbarSupportedContent", children=[
+                    html.Ul(className="navbar-nav mr-auto", children=[
+                        html.Li(className="nav-item active", children=[
+                            html.A("Enter Vitals", className="nav-link", href="/determine_risk")
+                        ]),
+                        html.Li(className="nav-item", children=[
+                            html.A("Dataset", className="nav-link", href="#")
+                        ])
+                    ]),
+                    html.Form(className="form-inline my-2 my-lg-0", children=[
+                        html.Button("Logout", className="btn btn-outline-success my-2 my-sm-0", type="submit",
+                                    id="logoutButton")
+                    ])
+                ])
+            ]),
+        ]),
+
+        html.Br(),
+        html.H1('List of analysed data elements:'),
         dcc.Graph(
             id='heat_map',
             figure=fig,
             className='graphBox'
         ),
 
-        # html.H1(children='''
-        #         Scatter plot of height as it relates to weight in the dataset.
-        #     '''),
+        html.Br(),
         dcc.Graph(
             id='scatter_plot',
             figure=fig2,
             className='graphBox'
         ),
 
+        html.Br(),
         dcc.Graph(
             id='pie_graph_set_1',
             figure=fig345,
@@ -124,9 +142,8 @@ def init_dashboard(server):
             className='graphBox'
         ),
 
-        html.H1(children='''
-                List of records
-            '''),
+        html.Br(),
+        html.H1("List of Records"),
         dash_table.DataTable(
             id='table',
             columns=[
@@ -152,4 +169,5 @@ def init_dashboard(server):
             }]
         )
     ])
+
     return dash_app.server

@@ -1,5 +1,4 @@
 body {
-    /*background: linear-gradient(to right, #c04848, #480048);*/
     background: darkslategray;
     background: linear-gradient(to right, dimgray, darkgray);
     min-height: 100vh
@@ -9,22 +8,29 @@ body {
     color: #aaa
 }
 
-#goBackButton #logoutButton{
-    font-size: 80%;
-    border-radius: 5rem;
-    letter-spacing: .1rem;
-    font-weight: bold;
-    padding: 1rem;
-    transition: all 0.2s;
-}
-
 img {
     height: 170px;
     width: 140px
 }
 
 .graphBox {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     border-radius: 15px;
     overflow: hidden;
+    padding: 20px;
 }
+
+.dash-table-container{
+    padding: 20px;
+}
+
+#logoutButton {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    transition: all 0.2s;
+    color:white;
+    border-color: blue;
+    background-color: royalblue;
+  }

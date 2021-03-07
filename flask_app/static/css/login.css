@@ -55,6 +55,17 @@ body {
   transition: all 0.2s;
 }
 
+#logoutButton {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    transition: all 0.2s;
+    color:white;
+    border-color: blue;
+    background-color: royalblue;
+  }
+
 .form-signin .btn {
   font-size: 80%;
   border-radius: 5rem;
