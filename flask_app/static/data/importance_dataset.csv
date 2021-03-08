@@ -1,13 +1,11 @@
 Variable,Importance
-Age,19.25
-Gender,1.26
-Height,8.44
-Weight,9.31
-BMI,12.83
-Sys. BP,26.55
-Dias. BP,12.67
-Glucose Lvl,1.6
-Cholesterol,5.43
-Smoking,0.78
-Alcohol Use,0.59
-Active,1.29
+Age,13.28
+Gender,0.37
+Bmi,5.27
+Systolic BP,43.14
+Diastolic BP,21.51
+Blood Glucose,1.07
+Cholesterol,8.23
+Smoker,0.37
+Alcohol Use,0.3
+Active,0.7

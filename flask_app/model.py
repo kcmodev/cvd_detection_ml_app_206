@@ -11,7 +11,7 @@ def read_data_file():
     Uses pandas to read in stored data file to assess accuracy.
     :return:
     """
-    cvd_data = pd.read_csv('flask_app/static/data/sanitized_cvd_data.csv')
+    cvd_data = pd.read_csv('flask_app/static/data/sanitized_raw_cvd_data.csv')
 
     return cvd_data
 
@@ -94,6 +94,7 @@ def parse_user_input(user_form_submissions):
     user_selections = np.array([user_selected_age,
                                 user_selected_height,
                                 user_selected_weight,
+                                user_bmi,
                                 user_selected_gender,
                                 user_selected_sbp,
                                 user_selected_dbp,
