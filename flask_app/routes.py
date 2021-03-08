@@ -1,7 +1,7 @@
 """Routes for parent Flask app."""
 from flask import render_template, request, json, session, redirect
 from flask import current_app as app
-from flask_app import model, log
+from flask_app import model
 
 
 @app.route('/')
@@ -19,11 +19,10 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def user_login():
-    username, passwd = log.creds()
     entered_username = request.form['user']
     entered_passwd = request.form['password']
 
-    if entered_username == username and entered_passwd == passwd:
+    if entered_username == 'admin' and entered_passwd == 'admin':
         session['logged_in'] = True
         return redirect('/determine_risk')
     else:
