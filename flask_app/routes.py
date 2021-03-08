@@ -3,6 +3,7 @@ from flask import render_template, request, json, session, redirect
 from flask import current_app as app
 from flask_app import model
 
+# from wsgi import User, db
 
 @app.route('/')
 @app.route('/index', methods=['GET'])
@@ -12,8 +13,6 @@ def index():
     :return:
     """
 
-    session['logged_in'] = False
-
     return render_template('index.html', title='Login')
 
 
@@ -21,6 +20,8 @@ def index():
 def user_login():
     entered_username = request.form['user']
     entered_passwd = request.form['password']
+
+    session['logged_in'] = False
 
     if entered_username == 'admin' and entered_passwd == 'admin':
         session['logged_in'] = True
