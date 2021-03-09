@@ -2,14 +2,16 @@
 from flask import render_template, request, json, session, redirect
 from flask import current_app as app
 from flask_app import model
+from flask_login import login_user, login_required, logout_user
 
-# from wsgi import User, db
+from wsgi import User
+
 
 @app.route('/')
 @app.route('/index', methods=['GET'])
 def index():
     """
-    Renders login screen and initiates session token to validate login
+    Renders login screen
     :return:
     """
 
@@ -21,75 +23,66 @@ def user_login():
     entered_username = request.form['user']
     entered_passwd = request.form['password']
 
-    session['logged_in'] = False
+    user = User.query.filter_by(username=entered_username, password=entered_passwd).first()
 
-    if entered_username == 'admin' and entered_passwd == 'admin':
-        session['logged_in'] = True
-        return redirect('/determine_risk')
-    else:
-        return redirect('/index')
+    if user:
+        login_user(user)
+
+    return redirect('/determine_risk')
 
 
 @app.route('/determine_risk', methods=['GET'])
+@login_required
 def user_variables_page():
     """
     Renders form to accept user input
     :return:
     """
 
-    if session['logged_in']:
-        return render_template('determine_risk.html', title='Determine Risk')
-    else:
-        return redirect('/index')
+    return render_template('determine_risk.html', title='Determine Risk')
 
 
 @app.route('/calculated_risk_results', methods=['POST'])
+@login_required
 def show_risk_results():
     """
     Take POST request and saves user input as session data.
     :return:
     """
 
-    if session['logged_in']:
-        if request.method == 'POST':
-            session['json'] = request.get_json()  # get JSON from ajax request to pass user input to model
-            return json.dumps({'success': True}), 200
-    else:
-        return redirect('/index')
+    session['json'] = request.get_json()  # get JSON from ajax request to pass user input to model
+    logout_user()
+    return json.dumps({'success': True}), 200
 
 
 @app.route('/calculated_risk_results', methods=['GET'])
+@login_required
 def show_risk_results_page():
     """
     Takes GET request, uses session data to determine and display results.
     :return:
     """
 
-    if session['logged_in']:
-        user_input = session['json']  # saves user form submission as session data
-        cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(user_input)  # runs model to make the prediction
-        return render_template('calculated_risk_results.html',
-                               title='Results',
-                               user_data=user_input,
-                               cvd_result=cvd_result,
-                               model_score=model_score,
-                               result_string=result_string,
-                               categories=high_risk_categories)
-    else:
-        return redirect('/index')
+    user_input = session['json']  # saves user form submission as session data
+    cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(user_input)  # runs model to make the prediction
+    return render_template('calculated_risk_results.html',
+                           title='Results',
+                           user_data=user_input,
+                           cvd_result=cvd_result,
+                           model_score=model_score,
+                           result_string=result_string,
+                           categories=high_risk_categories)
 
 
 @app.route('/dashapp', methods=['GET'])
+@login_required
 def dashboard_page():
     """
     Redirects to Plotly dashboard.
     :return:
     """
 
-    if session['logged_in']:
-        return redirect('/dashapp/')
-    else:
-        return redirect('/index')
+    return redirect('/dashapp/')
 
 
 @app.route('/logout', methods=['GET'])
