@@ -4,8 +4,6 @@ from flask import current_app as app
 from flask_app import model
 from flask_login import login_user, login_required, logout_user
 
-from wsgi import User
-
 
 @app.route('/')
 @app.route('/index', methods=['GET'])
@@ -20,6 +18,8 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def user_login():
+    from wsgi import User
+
     entered_username = request.form['user']
     entered_passwd = request.form['password']
 
