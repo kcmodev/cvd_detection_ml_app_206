@@ -51,7 +51,6 @@ def show_risk_results():
     """
 
     session['json'] = request.get_json()  # get JSON from ajax request to pass user input to model
-    logout_user()
     return json.dumps({'success': True}), 200
 
 
@@ -93,4 +92,5 @@ def logout_user_and_clear_session_data():
     """
 
     session.clear()
+    logout_user()
     return redirect('/index')
