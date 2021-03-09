@@ -15,6 +15,10 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(30), unique=True)
 
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
 
 @login_manager.user_loader
 def load_user(user_id):
