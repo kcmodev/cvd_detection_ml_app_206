@@ -67,14 +67,14 @@ def parse_user_input(user_form_submissions):
     user_selected_sbp = int(user_form_submissions[4]['systolic_bp'])  # systolic bp
 
     if user_selected_sbp > 130:
-        high_risk_categories['blood pressure'] = 'Elevated blood pressure risk factor found.'
+        high_risk_categories['Blood Pressure'] = 'Systolic Blood Pressure over 130mm/Hg'
 
     user_selected_dbp = user_form_submissions[5]['diastolic_bp']  # diastolic bp
 
-    user_bmi = user_selected_weight / ((user_selected_height / 100) ** 2)
+    user_bmi = int(user_selected_weight // ((user_selected_height / 100) ** 2))
 
-    if user_bmi >= 25:
-        high_risk_categories['bmi'] = 'Elevated body mass index risk factor found'
+    if user_bmi > 25:
+        high_risk_categories['BMI'] = f'Body Mass Index of {user_bmi}'
 
     # blood glucose measurement 1= normal, 2= above, 3= well above
     user_selected_glucose = user_form_submissions[6]['blood_glucose']
@@ -83,7 +83,7 @@ def parse_user_input(user_form_submissions):
     user_selected_cholesterol = int(user_form_submissions[7]['cholesterol'])
 
     if user_selected_cholesterol == 3:
-        high_risk_categories['cholesterol'] = 'Elevated cholesterol risk factor found'
+        high_risk_categories['Cholesterol'] = 'Cholesterol well above normal.'
 
     user_selected_alcohol = user_form_submissions[8]['alcohol_intake']  # smokes: 1 = yes, 0 = no
     user_selected_smoking = user_form_submissions[9]['current_smoker']  # consumes alcohol: 1 = yes, 0 = no
@@ -103,6 +103,12 @@ def parse_user_input(user_form_submissions):
                                 user_selected_smoking,
                                 user_selected_alcohol,
                                 user_selected_active]).reshape(1, -1)
+
+    if len(user_form_submissions) == 12:
+        high_risk_categories['pretty_old'] = f'You also happen to be the oldest person in history ' \
+                                             f'at {user_form_submissions[11]["pretty_old"]} years old! ' \
+                                             f'Some call it a risk factor, I call it a badge of honor ;). ' \
+                                             f'Should probably still go get a checkup though.'
 
     return user_selections, high_risk_categories
 
@@ -130,13 +136,13 @@ def score_model(cvd_prediction, loaded_model):
     score = loaded_model.score(x_test, y_test) * 100
 
     if cvd_prediction == 0:
-        result_string = f'You have a low risk of either having or developing heart disease. ' \
-                        f'\nModel accuracy score: {score:.2f}% '
+        result_string = f'You have a low risk of either having or developing heart disease.'
     elif cvd_prediction == 1:
-        result_string = f'You have a high risk of developing heart disease. ' \
-                        f'\nModel accuracy score: {score:.2f}%.'
+        result_string = f'You are at a high risk of developing heart disease. Please consult with a physician.'
 
-    return score, result_string
+    accuracy_string = f"Model accuracy score: {score:.2f}%."
+
+    return accuracy_string, result_string
 
 
 def initiate_model(user_data):

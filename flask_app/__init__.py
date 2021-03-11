@@ -15,4 +15,4 @@ def init_app():
         from .plotly.dashboard import init_dashboard
         app = init_dashboard(app)
 
-        return app
+        return app  # returns plotly application with flask as server back to wsgi to load the entire application

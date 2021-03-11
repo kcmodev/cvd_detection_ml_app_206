@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Enter Vitals <span class="sr-only"></span></a>
+                    <a class="nav-link" href="/determine_risk">Enter Vitals <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
                      <a class="nav-link" href="/dashapp/">See Dataset</a>
@@ -39,20 +39,28 @@ Template modified for simplicity to to eliminate unnecessary features.
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ result_string }}</h5>
+                    <h6 class="text-center">{{ model_score_string }}</h6>
                 </div>
                 <hr/>
                 <div class="card-body">
                     {%  if categories != None %}
                         <h5 class="card-title text-center">Your risk factors are as follows: </h5>
+                        <ul>
                         {% for key, value in categories.items() %}
-                            <div class="card-body">
-                                <h5 class="card-title text-left">{{ key }}:</h5>
-                                <h5 class="card-title text-center">{{ value }}</h5>
-                            </div>
+                            <li>{{ value }}</li>
                         {% endfor %}
+                        </ul>
                     {% else %}
                         <h5>No serious risk factors found!</h5>
                     {% endif %}
+                </div>
+                <hr/>
+                {# disclaimer that the application is not medical advice #}
+                <div class="card-body">
+                    <h5 class="text-center">Please take note: </h5>
+                    <h6 class="text-center">This is not to take the place of advice from a licensed physician.</h6>
+                    <h6 class="text-center">If you have any concerns about your health please seek the advice of a physician.</h6>
+                    <h6 class="text-center">If you are having a medical emergency please dial 911.</h6>
                 </div>
             </div>
           </div>

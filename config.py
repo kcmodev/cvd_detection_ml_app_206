@@ -5,7 +5,7 @@ class Config:
     """Set Flask config variables."""
 
     FLASK_ENV = 'development'
-    TESTING = True
+    TESTING = False
     SECRET_KEY = os.urandom(32)
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'

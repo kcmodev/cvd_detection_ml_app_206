@@ -1,6 +1,5 @@
 body {
-    background: darkslategray;
-    background: linear-gradient(to right, dimgray, darkgray);
+    background: linear-gradient(to right, lightgray, darkgray);
     min-height: 100vh
 }
 
@@ -14,7 +13,6 @@ img {
 }
 
 .graphBox {
-    /*border: 1px solid black;*/
     border-radius: 15px;
     overflow: hidden;
     padding: 20px;
@@ -24,13 +22,6 @@ img {
     padding: 20px;
 }
 
-#logoutButton {
-    font-size: 80%;
-    border-radius: 5rem;
-    letter-spacing: .1rem;
-    font-weight: bold;
-    transition: all 0.2s;
-    color:white;
-    border-color: blue;
-    background-color: royalblue;
-  }
+h1 {
+    text-align: center;
+}

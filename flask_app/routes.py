@@ -9,7 +9,7 @@ from flask_login import login_user, login_required, logout_user
 @app.route('/index', methods=['GET'])
 def index():
     """
-    Renders login screen
+    Route for landing page
     :return:
     """
 
@@ -18,14 +18,21 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def user_login():
-    from wsgi import User
+    """
+    Route for posting user credential verification. POST only.
+    :return:
+    """
 
+    from wsgi import User # import User class to query databse
+
+    # Retrieve user input from login form
     entered_username = request.form['user']
     entered_passwd = request.form['password']
 
+    # Query database
     user = User.query.filter_by(username=entered_username, password=entered_passwd).first()
 
-    if user:
+    if user:  # True if user exists in database
         login_user(user)
 
     return redirect('/determine_risk')
@@ -35,7 +42,7 @@ def user_login():
 @login_required
 def user_variables_page():
     """
-    Renders form to accept user input
+    Renders form to accept user input for model prediction
     :return:
     """
 
@@ -46,7 +53,7 @@ def user_variables_page():
 @login_required
 def show_risk_results():
     """
-    Take POST request and saves user input as session data.
+    Take POST request and saves user input as session JSON object.
     :return:
     """
 
@@ -62,13 +69,15 @@ def show_risk_results_page():
     :return:
     """
 
-    user_input = session['json']  # saves user form submission as session data
-    cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(user_input)  # runs model to make the prediction
+    user_input = session['json']  # loads user from session data
+
+    # runs model to make the prediction
+    cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(user_input)
     return render_template('calculated_risk_results.html',
                            title='Results',
                            user_data=user_input,
                            cvd_result=cvd_result,
-                           model_score=model_score,
+                           model_score_string=model_score,
                            result_string=result_string,
                            categories=high_risk_categories)
 
@@ -77,7 +86,7 @@ def show_risk_results_page():
 @login_required
 def dashboard_page():
     """
-    Redirects to Plotly dashboard.
+    Redirects to Plotly dashboard for all data visualizations.
     :return:
     """
 
@@ -87,7 +96,7 @@ def dashboard_page():
 @app.route('/logout', methods=['GET'])
 def logout_user_and_clear_session_data():
     """
-    Clears session data and returns user to the login screen.
+    Clears session data, logs out user, and redirects to the login screen.
     :return:
     """
 

@@ -22,7 +22,7 @@ def init_dashboard(server):
         ]
     )
 
-    # Columns: Age, Height, Weight, Gender, Systolic BP, Diastolic BP,
+    # Columns: Age, Height, Weight, BMI, Gender, Systolic BP, Diastolic BP,
     #           Cholesterol, Glucose, Smoking, Alcohol Intake, Physical Activity
     df = pd.read_csv("flask_app/static/data/readable_cvd_data.csv")
     cholesterol = df['Cholesterol']
@@ -149,7 +149,7 @@ def init_dashboard(server):
         ),
 
         html.Br(),
-        html.H1("List of Records"),
+        html.H1("Example list of records"),
         # Displays head of dataset in readable format
         dash_table.DataTable(
             id='table',
