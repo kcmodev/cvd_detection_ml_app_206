@@ -6,7 +6,7 @@ class Config:
 
     # FLASK_ENV = 'development'
     FLASK_DEBUG = 1
-    TESTING = False
+    # TESTING = True
     SECRET_KEY = os.urandom(32)
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'

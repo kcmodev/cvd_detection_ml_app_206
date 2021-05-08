@@ -2,22 +2,15 @@
   --input-padding-x: 1.5rem;
   --input-padding-y: 0.75rem;
 }
-
-html {
-  /* Photo by Arnold Francisca - Unsplash */
+body {
+  /* Photo by Arnold Francisca - Unsplash  */
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(../images/laptopBackgroundImage.jpg) no-repeat center center fixed;
-  /* -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover; */
   background-size: cover;
   backdrop-filter: blur(2px);
+  /* background: darkslategray; */
+  /* background: linear-gradient(to right, lightgray, darkgray); */
 }
-
-/* body {
-  background: darkslategray;
-  background: linear-gradient(to right, lightgray, darkgray);
-} */
 
 #div.form-group {
   padding: 15px;
