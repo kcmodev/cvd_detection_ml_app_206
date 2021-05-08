@@ -106,12 +106,3 @@ def logout_user_and_clear_session_data():
     session.clear()
     logout_user()
     return redirect('/index')
-
-
-@app.route('/api', methods=['GET'])
-def api_ping_to_wake():
-    """
-    Accepts POST request to wake app
-    """
-
-    return json.jsonify(status=200)
