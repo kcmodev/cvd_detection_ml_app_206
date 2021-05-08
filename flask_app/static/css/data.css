@@ -1,27 +1,38 @@
-body {
-    background: linear-gradient(to right, lightgray, darkgray);
-    min-height: 100vh
+html {
+  /* Photo by Arnold Francisca - Unsplash */
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(../images/laptopBackgroundImage.jpg) no-repeat center center fixed;
+  /* -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover; */
+  background-size: cover;
+  backdrop-filter: blur(2px);
 }
 
+/* body {
+    background: linear-gradient(to right, lightgray, darkgray);
+    min-height: 100vh
+} */
+
 .text-gray {
-    color: #aaa
+  color: #aaa;
 }
 
 img {
-    height: 170px;
-    width: 140px
+  height: 170px;
+  width: 140px;
 }
 
 .graphBox {
-    border-radius: 15px;
-    overflow: hidden;
-    padding: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 20px;
 }
 
-.dash-table-container{
-    padding: 20px;
+.dash-table-container {
+  padding: 20px;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }

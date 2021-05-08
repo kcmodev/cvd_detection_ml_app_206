@@ -23,14 +23,15 @@ def user_login():
     :return:
     """
 
-    from wsgi import User # import User class to query databse
+    from wsgi import User  # import User class to query databse
 
     # Retrieve user input from login form
     entered_username = request.form['user']
     entered_passwd = request.form['password']
 
     # Query database
-    user = User.query.filter_by(username=entered_username, password=entered_passwd).first()
+    user = User.query.filter_by(
+        username=entered_username, password=entered_passwd).first()
 
     if user:  # True if user exists in database
         login_user(user)
@@ -57,7 +58,8 @@ def show_risk_results():
     :return:
     """
 
-    session['json'] = request.get_json()  # get JSON from ajax request to pass user input to model
+    # get JSON from ajax request to pass user input to model
+    session['json'] = request.get_json()
     return json.dumps({'success': True}), 200
 
 
@@ -72,7 +74,8 @@ def show_risk_results_page():
     user_input = session['json']  # loads user from session data
 
     # runs model to make the prediction
-    cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(user_input)
+    cvd_result, model_score, result_string, high_risk_categories = model.initiate_model(
+        user_input)
     return render_template('calculated_risk_results.html',
                            title='Results',
                            user_data=user_input,
@@ -103,3 +106,12 @@ def logout_user_and_clear_session_data():
     session.clear()
     logout_user()
     return redirect('/index')
+
+
+@app.route('/api', methods=['GET'])
+def api_ping_to_wake():
+    """
+    Accepts POST request to wake app
+    """
+
+    return json.dumps({'success': True}), 200
