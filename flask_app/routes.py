@@ -114,4 +114,4 @@ def api_ping_to_wake():
     Accepts POST request to wake app
     """
 
-    return json.dumps({'success': True}), 200
+    return json.jsonify(status=200)
